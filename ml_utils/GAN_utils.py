@@ -50,7 +50,7 @@ def define_discriminator(image_shape: tuple):
     # define model
     model = Model(in_image, patch_out)
     # compile model
-    model.compile(loss='mse', optimizer=Adam(lr=0.0002, beta_1=0.5), loss_weights=[0.3])
+    model.compile(loss='mse', optimizer=Adam(lr=0.00002, beta_1=0.9), loss_weights=[0.3])
     return model
 
 
@@ -148,7 +148,7 @@ def define_composite_model(g_model_1, d_model, g_model_2, image_shape):
     # define model graph
     model = Model([input_gen, input_id], [output_d, output_id, output_f, output_b])
     # define optimization algorithm configuration
-    opt = Adam(lr=0.0002, beta_1=0.5)
+    opt = Adam(lr=0.02, beta_1=0.1)
     # compile model with weighting of least squares loss and L1 loss
     model.compile(loss=['mse', 'mae', 'mae', 'mae'], loss_weights=[1, 3, 10, 10], optimizer=opt)
     return model
@@ -213,7 +213,7 @@ def train(d_model_A, d_model_B, g_model_AtoB, g_model_BtoA, c_model_AtoB, c_mode
     Train function for CycleGAN models
     """
     # define properties of the training run
-    n_epochs, n_batch, = 10, 2  # Keep n_batch as 1 for per image training. n_epochs can be changed
+    n_epochs, n_batch, = 10, 1  # Keep n_batch as 1 for per image training. n_epochs can be changed
     # determine the output square shape of the discriminator
     n_patch = d_model_A.output_shape[1]  # Notice n_patch depends on the discriminator output image size. This
     # parameter can be changed for improvement.
