@@ -14,3 +14,6 @@ tf-explain
 seaborn
 matplotlib
 plotly
+pydot
+pydotplus
+graphviz
